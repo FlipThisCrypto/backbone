@@ -17,8 +17,8 @@ export function validateConfiguration(
   if (!config.collection_id?.trim()) {
     errors.push({ field: 'collection_id', message: 'Collection ID is required', severity: 'error' })
     score -= 15
-  } else if (!/^[a-fA-F0-9]{64}$/.test(config.collection_id)) {
-    errors.push({ field: 'collection_id', message: 'Collection ID must be 64-character hex string', severity: 'error' })
+  } else if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(config.collection_id)) {
+    errors.push({ field: 'collection_id', message: 'Collection ID must be valid UUID format (e.g. 4f4c447b-66c4-48de-bc27-4e6900176500)', severity: 'error' })
     score -= 15
   }
 
@@ -157,11 +157,11 @@ export function validateConfiguration(
 }
 
 export function validateWalletAddress(address: string): boolean {
-  return /^xch[a-z0-9]{59}$/.test(address)
+  return /^xch1[a-z0-9]{55}$/.test(address)
 }
 
 export function validateCollectionId(id: string): boolean {
-  return /^[a-fA-F0-9]{64}$/.test(id)
+  return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id)
 }
 
 export function validatePublicKey(key: string): boolean {

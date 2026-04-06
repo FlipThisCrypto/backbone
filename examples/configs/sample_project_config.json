@@ -6,8 +6,8 @@
   "total_supply": 100,
   "wallets": {
     "reward_pool": "xch1abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqr",
-    "admin_pubkey": "abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef123456",
-    "developer": "xch1developer1234567890abcdefghijklmnopqrstuvwxyz1234567"
+    "admin_pubkey": "abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890",
+    "developer": "xch1developer1234567890abcdefghijklmnopqrstuvwxyz123456789"
   },
   "funding": {
     "primary_split": {

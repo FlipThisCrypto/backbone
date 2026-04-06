@@ -26,8 +26,8 @@
     "collection_id": {
       "type": "string",
       "minLength": 1,
-      "pattern": "^[a-fA-F0-9]{64}$",
-      "description": "64-character hex collection identifier"
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+      "description": "UUID format collection identifier (e.g. 4f4c447b-66c4-48de-bc27-4e6900176500)"
     },
     "reward_asset": {
       "type": "string",

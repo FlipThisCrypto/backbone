@@ -10,7 +10,8 @@
     },
     "collection_id": {
       "type": "string",
-      "pattern": "^[a-fA-F0-9]{64}$"
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+      "description": "UUID format - must match project configuration collection_id"
     },
     "total_supply": {
       "type": "integer",
