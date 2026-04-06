@@ -1,7 +1,7 @@
 {
   "version": "PROJECT_CONFIG_V1",
   "project_name": "Genesis Collection Rewards",
-  "collection_id": "a1b2c3d4e5f67890a1b2c3d4e5f67890a1b2c3d4e5f67890a1b2c3d4e5f67890",
+  "collection_id": "4f4c447b-66c4-48de-bc27-4e6900176500",
   "reward_asset": "XCH",
   "total_supply": 100,
   "wallets": {
