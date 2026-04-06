@@ -8,8 +8,8 @@ import time
 from typing import Dict, List, Tuple, Optional
 from dataclasses import dataclass
 from math import floor
-from merkle_tree.merkle_builder import MerkleTreeBuilder
-from validation.schema_validator import SchemaValidator
+from ..merkle_tree.merkle_builder import MerkleTreeBuilder
+from ..validation.schema_validator import SchemaValidator
 
 @dataclass
 class EpochState:

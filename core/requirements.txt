@@ -6,8 +6,6 @@ httpx==0.25.2
 pytest==7.4.3
 pytest-asyncio==0.21.1
 jsonschema==4.20.0
-cryptography==41.0.8
-chia-blockchain==2.1.4
-blspy==2.0.2
-clvm==0.9.8
-clvm-tools==0.4.6
+cryptography>=41.0.0
+requests>=2.31.0
+uvicorn[standard]>=0.24.0

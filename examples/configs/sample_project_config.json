@@ -1,0 +1,44 @@
+{
+  "version": "PROJECT_CONFIG_V1",
+  "project_name": "Genesis Collection Rewards",
+  "collection_id": "a1b2c3d4e5f67890a1b2c3d4e5f67890a1b2c3d4e5f67890a1b2c3d4e5f67890",
+  "reward_asset": "XCH",
+  "total_supply": 100,
+  "wallets": {
+    "reward_pool": "xch1abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqr",
+    "admin_pubkey": "abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef123456",
+    "developer": "xch1developer1234567890abcdefghijklmnopqrstuvwxyz1234567"
+  },
+  "funding": {
+    "primary_split": {
+      "developer_pct": 10,
+      "reward_pool_pct": 90
+    },
+    "royalty_split": {
+      "developer_pct": 5,
+      "reward_pool_pct": 95
+    },
+    "behavior": {
+      "future_collections_fund_pool": false,
+      "random_xch_counts_as_funding": false,
+      "funding_mode": "delta_only"
+    }
+  },
+  "epochs": {
+    "frequency": "4h",
+    "timezone": "UTC",
+    "behavior": {
+      "snapshot_failure": "retry_original",
+      "zero_minted_points": "skip_epoch",
+      "zero_new_funds": "skip_epoch"
+    }
+  },
+  "claims": {
+    "claim_type": "full_only",
+    "batch_enabled": true,
+    "fees_paid_by": "claimant",
+    "transfer_rule": "snapshot_wallet",
+    "unclaimed_rewards": "stay_locked",
+    "ui_display_mode": "lifetime_plus_epochs"
+  }
+}
