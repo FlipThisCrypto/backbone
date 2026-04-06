@@ -1,0 +1,77 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Points Map Schema",
+  "type": "object",
+  "required": ["version", "collection_id", "total_supply", "point_distribution"],
+  "properties": {
+    "version": {
+      "type": "string",
+      "const": "POINTS_MAP_V1"
+    },
+    "collection_id": {
+      "type": "string",
+      "pattern": "^[a-fA-F0-9]{64}$"
+    },
+    "total_supply": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "point_distribution": {
+      "type": "object",
+      "required": ["buckets", "totals"],
+      "properties": {
+        "buckets": {
+          "type": "object",
+          "patternProperties": {
+            "^(10|[1-9])$": {
+              "type": "object",
+              "required": ["points", "count"],
+              "properties": {
+                "points": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "count": {
+                  "type": "integer", 
+                  "minimum": 0
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        },
+        "totals": {
+          "type": "object",
+          "required": ["card_count", "weighted_points"],
+          "properties": {
+            "card_count": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "weighted_points": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "additionalProperties": false
+        }
+      }
+    },
+    "validation": {
+      "type": "object",
+      "properties": {
+        "card_count_matches_supply": {
+          "type": "boolean"
+        },
+        "no_empty_buckets": {
+          "type": "boolean" 
+        },
+        "weighted_total_valid": {
+          "type": "boolean"
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

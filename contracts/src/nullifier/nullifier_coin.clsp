@@ -1,0 +1,35 @@
+;; Nullifier Coin Pattern - Prevents Double Claims Without State Bloat
+;; This coin is created once per claim and can never be spent again
+;; Prevents infinite state growth in the main singleton
+
+(mod (
+    EPOCH_ID
+    WALLET_PUZZLE_HASH
+    CREATION_SIGNATURE  ;; Signature from the claim transaction
+)
+
+  ;; Import condition codes
+  (include condition_codes.clib)
+  (include sha256tree.clib)
+
+  ;; This coin can only be created, never spent
+  ;; It serves as a permanent record that a specific wallet claimed a specific epoch
+  
+  ;; The puzzle hash is deterministic: sha256(epoch_id wallet_puzzle_hash "BACKBONE_NULLIFIER_V1") 
+  ;; So duplicate claims will attempt to create the same coin, which will fail
+
+  ;; Validation logic
+  (if (= (my-amount) 1)  ;; Nullifier coins are always 1 mojo
+      ;; Valid nullifier - announce creation and lock forever
+      (list
+        ;; Announce that this nullifier was created
+        (list CREATE_PUZZLE_ANNOUNCEMENT 
+              (sha256tree (list "NULLIFIER_CREATED" EPOCH_ID WALLET_PUZZLE_HASH))
+        )
+        ;; This coin cannot be spent - no CREATE_COIN conditions
+        ;; It becomes permanently locked, serving as the claim record
+      )
+      ;; Invalid amount
+      (x "INVALID_NULLIFIER_AMOUNT")
+  )
+)

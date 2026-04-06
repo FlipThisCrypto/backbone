@@ -1,0 +1,184 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Project Configuration Schema",
+  "type": "object",
+  "required": [
+    "version",
+    "project_name", 
+    "collection_id",
+    "reward_asset",
+    "total_supply",
+    "wallets",
+    "funding",
+    "epochs",
+    "claims"
+  ],
+  "properties": {
+    "version": {
+      "type": "string",
+      "const": "PROJECT_CONFIG_V1"
+    },
+    "project_name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 100
+    },
+    "collection_id": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[a-fA-F0-9]{64}$",
+      "description": "64-character hex collection identifier"
+    },
+    "reward_asset": {
+      "type": "string",
+      "enum": ["XCH"],
+      "description": "V1 supports XCH only"
+    },
+    "total_supply": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 1000000
+    },
+    "wallets": {
+      "type": "object",
+      "required": ["reward_pool", "admin_pubkey", "developer"],
+      "properties": {
+        "reward_pool": {
+          "type": "string",
+          "pattern": "^xch[a-z0-9]{59}$",
+          "description": "Chia wallet address for reward pool"
+        },
+        "admin_pubkey": {
+          "type": "string", 
+          "pattern": "^[a-fA-F0-9]{96}$",
+          "description": "48-byte public key for epoch authorization"
+        },
+        "developer": {
+          "type": "string",
+          "pattern": "^xch[a-z0-9]{59}$"
+        },
+        "project_a": {
+          "type": "string",
+          "pattern": "^xch[a-z0-9]{59}$"
+        },
+        "project_b": {
+          "type": "string", 
+          "pattern": "^xch[a-z0-9]{59}$"
+        }
+      }
+    },
+    "funding": {
+      "type": "object",
+      "required": ["primary_split", "royalty_split", "behavior"],
+      "properties": {
+        "primary_split": {
+          "type": "object",
+          "required": ["developer_pct", "reward_pool_pct"],
+          "properties": {
+            "developer_pct": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "reward_pool_pct": {
+              "type": "number", 
+              "minimum": 0,
+              "maximum": 100
+            }
+          },
+          "additionalProperties": false
+        },
+        "royalty_split": {
+          "type": "object",
+          "required": ["developer_pct", "reward_pool_pct"],
+          "properties": {
+            "developer_pct": {"type": "number", "minimum": 0, "maximum": 100},
+            "reward_pool_pct": {"type": "number", "minimum": 0, "maximum": 100},
+            "project_a_pct": {"type": "number", "minimum": 0, "maximum": 100},
+            "project_b_pct": {"type": "number", "minimum": 0, "maximum": 100}
+          },
+          "additionalProperties": false
+        },
+        "behavior": {
+          "type": "object",
+          "properties": {
+            "future_collections_fund_pool": {"type": "boolean", "default": false},
+            "random_xch_counts_as_funding": {"type": "boolean", "default": false},
+            "funding_mode": {"type": "string", "enum": ["delta_only"], "default": "delta_only"}
+          }
+        }
+      }
+    },
+    "epochs": {
+      "type": "object", 
+      "required": ["frequency", "timezone", "behavior"],
+      "properties": {
+        "frequency": {
+          "type": "string",
+          "enum": ["1h", "4h", "8h", "12h", "24h"],
+          "default": "4h"
+        },
+        "timezone": {
+          "type": "string",
+          "default": "UTC"
+        },
+        "behavior": {
+          "type": "object",
+          "properties": {
+            "snapshot_failure": {
+              "type": "string", 
+              "enum": ["retry_original", "skip_epoch", "manual_override"],
+              "default": "retry_original"
+            },
+            "zero_minted_points": {
+              "type": "string",
+              "enum": ["skip_epoch", "create_empty"],
+              "default": "skip_epoch"  
+            },
+            "zero_new_funds": {
+              "type": "string",
+              "enum": ["skip_epoch", "create_empty"],
+              "default": "skip_epoch"
+            }
+          }
+        }
+      }
+    },
+    "claims": {
+      "type": "object",
+      "required": ["claim_type", "batch_enabled", "fees_paid_by"],
+      "properties": {
+        "claim_type": {
+          "type": "string",
+          "enum": ["full_only", "partial_allowed"],
+          "default": "full_only"
+        },
+        "batch_enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "fees_paid_by": {
+          "type": "string", 
+          "enum": ["claimant", "pool"],
+          "default": "claimant"
+        },
+        "transfer_rule": {
+          "type": "string",
+          "enum": ["snapshot_wallet", "current_wallet"],
+          "default": "snapshot_wallet"
+        },
+        "unclaimed_rewards": {
+          "type": "string",
+          "enum": ["stay_locked", "forfeit_to_pool"],
+          "default": "stay_locked"
+        },
+        "ui_display_mode": {
+          "type": "string",
+          "enum": ["lifetime_plus_epochs", "epochs_only"],
+          "default": "lifetime_plus_epochs"
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}
